@@ -30,7 +30,7 @@ RUN pip install -r requirements.txt
 # Копируем entrypoint
 COPY entrypoint.sh /entrypoint.sh
 
-# Копируем проект и script.sh
+# Копируем проект
 COPY app/ .
 
 # Порт для Django
