@@ -2,13 +2,17 @@
 FROM python:slim
 
 # Устанавливаем пакеты
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+# RUN apt-get update && \
+    # DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    # ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
+    # echo "Europe/Moscow" > /etc/timezone && \
+    # dpkg-reconfigure -f noninteractive tzdata && \
+    # apt-get clean && \
+    # rm -rf /var/lib/apt/lists/*
+RUN \
     ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
     echo "Europe/Moscow" > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    dpkg-reconfigure -f noninteractive tzdata
 
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1 \

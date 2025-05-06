@@ -3,7 +3,7 @@ FROM python:slim
 
 # Устанавливаем пакеты
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y cron tzdata && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y cron && \
     ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
     echo "Europe/Moscow" > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata && \
