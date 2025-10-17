@@ -1,8 +1,8 @@
 services:
   timer:
     build: .
-    image: timer-image
-    container_name: timer-container
+    # image: timer-image
+    # container_name: timer-container
     restart: unless-stopped
     command: "cron -f"
     volumes:
