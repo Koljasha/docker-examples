@@ -26,7 +26,7 @@ COPY entrypoint.sh /entrypoint.sh
 
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1 \
-PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
