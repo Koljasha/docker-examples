@@ -16,17 +16,15 @@ RUN \
 
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1 \
-PYTHONUNBUFFERED=1
-
-# Обновляем pip
-RUN pip install --upgrade pip
+    PYTHONUNBUFFERED=1
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Установка Django
+# Копируем файл зависимостей и устанавливаем их
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Копируем проект
 COPY app/ .
