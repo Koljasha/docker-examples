@@ -14,6 +14,7 @@ RUN apt-get update && \
 
 # Создаем Cron
 COPY cronfile /etc/cron.d/
+
 # Устанавливаем права и проверяем валидность cron-задания
 # RUN chmod +x /app/script.sh && \
     # chmod 0644 /etc/cron.d/cronfile && \
