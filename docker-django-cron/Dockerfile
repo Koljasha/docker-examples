@@ -3,7 +3,10 @@ FROM python:slim
 
 # Устанавливаем пакеты
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y cron procps && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        cron \
+        tzdata \
+        procps && \
     ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
     echo "Europe/Moscow" > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata && \
@@ -13,22 +16,25 @@ RUN apt-get update && \
 # Создаем Cron
 COPY cronfile /etc/cron.d/
 
+# Устанавливаем права и проверяем валидность cron-задания
+# RUN chmod +x /app/script.sh && \
+    # chmod 0644 /etc/cron.d/cronfile && \
+    # crontab -u root /etc/cron.d/cronfile
+
+# Копируем entrypoint
+COPY entrypoint.sh /entrypoint.sh
+
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1 \
 PYTHONUNBUFFERED=1
 
-# Обновляем pip
-RUN pip install --upgrade pip
-
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Установка Django
+# Копируем файл зависимостей и устанавливаем их
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Копируем entrypoint
-COPY entrypoint.sh /entrypoint.sh
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Копируем проект
 COPY app/ .
